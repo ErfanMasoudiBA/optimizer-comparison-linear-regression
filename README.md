@@ -4,9 +4,9 @@ A visual and practical comparison of popular optimization algorithms on a simple
 
 This project compares how different optimizers update model parameters, reduce loss, and converge toward the true linear function:
 
-\[
+$$
 y = wx + b
-\]
+$$
 
 The implemented optimizers are:
 
@@ -27,7 +27,7 @@ Instead of treating optimizers as black boxes, this project tracks:
 
 - Loss reduction over epochs
 - Early-stage convergence behavior
-- Parameter updates for \(w\) and \(b\)
+- Parameter updates for $w$ and $b$
 - Oscillation and stability of each optimizer
 - Final learned regression lines
 
@@ -37,25 +37,28 @@ Instead of treating optimizers as black boxes, this project tracks:
 
 The dataset is generated from a linear function with noise:
 
-\[
-y = 3x + 2 + noise
-\]
+$$
+y = 3x + 2 + \text{noise}
+$$
 
 The model tries to learn:
 
-\[
+$$
 \hat{y} = wx + b
-\]
+$$
 
 The true parameters are:
 
-````text
+```text
 w = 3
 b = 2
+```
 
 The objective function is Mean Squared Error:
 
-\[ MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2 \]
+$$
+MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2
+$$
 
 ---
 
@@ -65,7 +68,9 @@ The objective function is Mean Squared Error:
 
 Stochastic Gradient Descent updates parameters directly using the gradient:
 
-\[ \theta = \theta - \alpha \nabla J(\theta) \]
+$$
+\theta = \theta - \alpha \nabla J(\theta)
+$$
 
 It is simple, stable, and works surprisingly well on this convex regression problem.
 
@@ -75,9 +80,13 @@ It is simple, stable, and works surprisingly well on this convex regression prob
 
 Momentum accumulates previous gradients to accelerate movement in consistent directions:
 
-\[ v_t = \beta v_{t-1} - \alpha \nabla J(\theta) \]
+$$
+v_t = \beta v_{t-1} - \alpha \nabla J(\theta)
+$$
 
-\[ \theta = \theta + v_t \]
+$$
+\theta = \theta + v_t
+$$
 
 It can converge faster than SGD, but may oscillate when gradients are noisy.
 
@@ -87,7 +96,9 @@ It can converge faster than SGD, but may oscillate when gradients are noisy.
 
 Nesterov Momentum computes the gradient at a lookahead position:
 
-\[ \theta_{lookahead} = \theta + \beta v \]
+$$
+\theta_{\text{lookahead}} = \theta + \beta v
+$$
 
 This can improve convergence in many problems, but in noisy stochastic settings, it may show stronger oscillation.
 
@@ -97,9 +108,13 @@ This can improve convergence in many problems, but in noisy stochastic settings,
 
 Adagrad adapts the learning rate for each parameter based on accumulated squared gradients:
 
-\[ G_t = G_{t-1} + g_t^2 \]
+$$
+G_t = G_{t-1} + g_t^2
+$$
 
-\[ \theta = \theta - \frac{\alpha}{\sqrt{G_t} + \epsilon} g_t \]
+$$
+\theta = \theta - \frac{\alpha}{\sqrt{G_t} + \epsilon} g_t
+$$
 
 It is stable, but its effective learning rate continuously decreases, which can make convergence slower over time.
 
@@ -109,7 +124,9 @@ It is stable, but its effective learning rate continuously decreases, which can 
 
 RMSProp improves Adagrad by using an exponential moving average of squared gradients:
 
-\[ S_t = \rho S_{t-1} + (1-\rho)g_t^2 \]
+$$
+S_t = \rho S_{t-1} + (1-\rho)g_t^2
+$$
 
 It prevents the learning rate from shrinking too aggressively and usually performs well in early convergence.
 
@@ -131,10 +148,10 @@ It is usually fast and stable in many machine learning problems.
 
 ### Overall Loss Comparison
 
-All optimizers eventually converge to a very similar loss value.
+All optimizers eventually converge to a very similar loss value.  
 The main difference is visible in the early epochs, where some optimizers reduce the loss much faster than others.
 
-![Loss Comparison](assets/loss_comparison.png)
+![Loss Comparison](images/loss_comparison.png)
 
 Key observations:
 
@@ -148,10 +165,10 @@ Key observations:
 
 ### Zoomed Loss Comparison - First 25 Epochs
 
-The first 25 epochs are important because most of the sharp loss reduction happens there.
+The first 25 epochs are important because most of the sharp loss reduction happens there.  
 A log-scale plot makes the early-stage behavior much easier to compare.
 
-![Zoomed Loss Log Scale](assets/zoomed_loss_log.png)
+![Zoomed Loss Log Scale](images/zoomed_loss_log.png)
 
 Key observations:
 
@@ -165,20 +182,21 @@ Key observations:
 
 ### Parameter Convergence
 
-The following plots show how each optimizer updates the parameters \(w\) and \(b\) over epochs.
+The following plots show how each optimizer updates the parameters $w$ and $b$ over epochs.
 
-![Parameter Convergence](assets/parameters_convergence.png)
+![Parameter Convergence](images/parameters_convergence.png)
 
 The dashed black lines represent the true values:
 
-text
+```text
 True w = 3
 True b = 2
+```
 
 Key observations:
 
-- Most optimizers quickly move toward the correct \(w\) value.
-- The learned \(b\) values approach the true intercept but remain slightly below 2.
+- Most optimizers quickly move toward the correct $w$ value.
+- The learned $b$ values approach the true intercept but remain slightly below 2.
 - Nesterov shows more oscillation in this experiment.
 - SGD is smoother than expected for this simple convex problem.
 - Adaptive methods reach the correct region quickly.
@@ -233,10 +251,10 @@ For this simple Linear Regression problem:
 
 ## Project Structure
 
-text
+```text
 optimizer-comparison-linear-regression/
 │
-├── assets/
+├── images/
 │   ├── loss_comparison.png
 │   ├── zoomed_loss_log.png
 │   └── parameters_convergence.png
@@ -244,6 +262,7 @@ optimizer-comparison-linear-regression/
 ├── optimizer_comparison.ipynb
 ├── README.md
 └── requirements.txt
+```
 
 ---
 
@@ -251,28 +270,32 @@ optimizer-comparison-linear-regression/
 
 Clone the repository:
 
-bash
+```bash
 git clone https://github.com/your-username/optimizer-comparison-linear-regression.git
 cd optimizer-comparison-linear-regression
+```
 
 Install dependencies:
 
-bash
+```bash
 pip install -r requirements.txt
+```
 
 Run the notebook:
 
-bash
+```bash
 jupyter notebook optimizer_comparison.ipynb
+```
 
 ---
 
 ## Requirements
 
-text
+```text
 numpy
 matplotlib
 jupyter
+```
 
 ---
 
@@ -292,23 +315,9 @@ Possible improvements for this project:
 
 ## Conclusion
 
-This project shows that optimizer behavior cannot be judged only by final loss.
+This project shows that optimizer behavior cannot be judged only by final loss.  
 Even when all methods converge successfully, their speed, stability, and parameter paths can be very different.
 
 For this Linear Regression experiment, RMSProp and Adam show the fastest early convergence, SGD remains stable and competitive, and Nesterov shows stronger oscillation due to noisy stochastic updates.
 
 The project provides a simple but useful visual foundation for understanding how popular optimization algorithms work under the hood.
-
-
----
-```markdown
-# Optimizer Comparison on Linear Regression
-
-<p align="center">
-  <img src="assets/loss_comparison.png" width="700">
-</p>
-````
-
-A from-scratch visual comparison of popular optimization algorithms on Linear Regression using NumPy and Matplotlib.
-
-This project compares **SGD**, **Momentum**, **Nesterov**, **Adagrad**, **RMSProp**, and **Adam** by tracking their loss curves and parameter convergence behavior.
